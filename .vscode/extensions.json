@@ -1,0 +1,9 @@
+{
+  // List of extensions which should be recommended for users of this workspace.
+  "recommendations": [
+    "actboy168.lua-debug",
+    "editorconfig.editorconfig",
+    "streetsidesoftware.code-spell-checker",
+    "sumneko.lua"
+  ]
+}
