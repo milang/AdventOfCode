@@ -25,8 +25,10 @@ end
 
 local overallCount = 0
 for _, group in ipairs(groups) do
-    for _, _ in pairs(group) do
-        overallCount = overallCount + 1
+    for character, _ in pairs(group) do
+        if character ~= "lines" then
+            overallCount = overallCount + 1
+        end
     end
 end
 
