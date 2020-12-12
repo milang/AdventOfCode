@@ -54,8 +54,8 @@ for _, action in ipairs(actions) do
     elseif action.action == "S" then advancedFerry.wy = advancedFerry.wy - action.value
     elseif action.action == "E" then advancedFerry.wx = advancedFerry.wx + action.value
     elseif action.action == "W" then advancedFerry.wx = advancedFerry.wx - action.value
-    elseif action.action == "L" then turnRightAdvanced(advancedFerry, math.floor((360 - (action.value % 360)) / 90))
-    elseif action.action == "R" then turnRightAdvanced(advancedFerry, math.floor((action.value % 360) / 90))
+    elseif action.action == "L" then turnRightAdvanced(advancedFerry, math.floor((360 - action.value) / 90))
+    elseif action.action == "R" then turnRightAdvanced(advancedFerry, math.floor(action.value / 90))
     else error("Uknown action") end
 end
 
