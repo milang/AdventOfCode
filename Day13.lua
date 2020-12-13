@@ -26,31 +26,51 @@ print(string.format("Earliest bus %d arrived at %d, result is %d", found.bus, fo
 
 ------
 
-local function isValid(localBuses, timestamp)
-    for i = 1, #localBuses do
-        if localBuses[i] ~= 0 and ((timestamp + i - 1) % localBuses[i]) ~= 0 then return false end
+local function isValid(localPairs, timestamp)
+    for i = 3, #localPairs do
+        if ((timestamp + localPairs[i].offset) % localPairs[i].bus) ~= 0 then return false end
     end
     return true
 end
 
-local maxBus = 0
-local maxBusOffset = 0
+-- order (busID, offset) pairs from largest to smallest ID
+local pairs = {}
 for i = 1, #buses do
-    if buses[i] > maxBus then
-        maxBus = buses[i]
-        maxBusOffset = i - 1
+    if buses[i] > 0 then table.insert(pairs, { bus = buses[i], offset = i - 1 }) end
+end
+table.sort(pairs, function (a, b) return a.bus > b.bus end)
+
+-- find the two largest bus IDs
+local busA = (pairs[1]).bus
+local busAOffset = (pairs[1]).offset
+local busB = (pairs[2]).bus
+local busBOffset = (pairs[2]).offset
+print(string.format("Two largest busses are %d (offset %d) and %d (offset %d)", busA, busAOffset, busB, busBOffset))
+
+local init = 0
+if #arg > 0 then init = tonumber(arg[1]) end
+local busAtime = (math.floor(init / busA) * busA) - busAOffset
+local busBtime = (math.floor(init / busB) * busB) - busBOffset
+local progress = 0
+while true do
+    if busAtime < busBtime then busAtime = busAtime + busA
+    elseif busBtime < busAtime then busBtime = busBtime + busB
+    else
+        -- we found the first timestamp that satistfies the two
+        -- largest bus IDs; from now on candidate timestamps repeat with
+        -- period of "increment", try 'em all
+        local increment = busA * busB
+        while true do
+            if isValid(pairs, busAtime) then break end
+            busAtime = busAtime + increment
+            local newProgress = math.floor(busAtime / 1000000000000)
+            if newProgress > progress then
+                progress = newProgress
+                print(progress)
+            end
+        end
+        break
     end
 end
 
-print(string.format("Max busId is %d, offset %d", maxBus, maxBusOffset))
-
-local base = 99999999749193
--- local base = 0
-local candidate = 0
-while true do
-    base = base + maxBus
-    candidate = base - maxBusOffset
-    if isValid(buses, candidate) then break end
-end
-
-print(string.format("Found timestamp %d", candidate))
+print(string.format("Found timestamp %d", busAtime))
