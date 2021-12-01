@@ -40,7 +40,7 @@ local function isNice(line)
 end
 
 local niceCount = 0
-for line in io.lines("Practice2015_Day05.txt") do
+for line in io.lines("Day05.txt") do
     if isNice(line) then niceCount = niceCount + 1 end
 end
 
@@ -64,7 +64,7 @@ local function isNicer(line)
 end
 
 local nicerCount = 0
-for line in io.lines("Practice2015_Day05.txt") do
+for line in io.lines("Day05.txt") do
     if isNicer(line) then nicerCount = nicerCount + 1 end
 end
 

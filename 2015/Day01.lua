@@ -1,7 +1,7 @@
 print("Solving 2015, day 1")
 
 local directions = nil
-for line in io.lines("Practice2015_Day01.txt") do
+for line in io.lines("Day01.txt") do
     directions = line
 end
 

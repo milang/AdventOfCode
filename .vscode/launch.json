@@ -7,7 +7,7 @@
       "name": "Debug Lua",
       "stopOnEntry": false,
       "program": "${file}",
-      "cwd": "${workspaceFolder}"
+      "cwd": "${fileDirname}"
     }
   ]
 }
