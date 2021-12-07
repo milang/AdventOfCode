@@ -40,14 +40,8 @@ print(string.format("Linear cost has optimal index %d, needs %d fuel", minimum.i
 
 ---
 
-local costs = { 1 }
-costs[0] = 0
-for i = 2, max, 1 do
-    costs[i] = costs[i-1] + i
-end
-
 local function nonLinearCost(distance)
-    return costs[distance]
+    return distance * (distance + 1) / 2
 end
 
 minimum = findMinimum(positions, nonLinearCost)
